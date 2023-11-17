@@ -6,3 +6,10 @@ class UserModel(models.Model):
     profile = models.CharField(default="",max_length=5000)
     email = models.CharField(default="",max_length=100)
     password = models.CharField(default="",max_length=100)
+
+
+
+class BlogModel(models.Model):
+    userid = models.CharField(default="",max_length=100)
+    title = models.CharField(default="",max_length=100)
+    message = models.CharField(default="",max_length=100)
