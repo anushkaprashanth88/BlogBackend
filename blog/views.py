@@ -38,3 +38,10 @@ def addPost(request):
             return HttpResponse({json.dumps({"status":"success"})})
         else:
             return HttpResponse({json.dumps({"status":"failed"})})
+        
+@csrf_exempt
+def viewAll(request):
+    if request.method == "POST":
+        viewList = BlogModel.objects.all()
+        serialize_data = PostSerializer(viewList,many=True)
+        return HttpResponse({json.dumps(serialize_data.data)})
