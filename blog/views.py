@@ -6,6 +6,7 @@ from blog.serializer import BlogSerializer
 from blog.models import UserModel
 from blog.models import BlogModel
 from blog.serializer import PostSerializer
+from django.db.models import Q
 
 # Create your views here.
 @csrf_exempt
@@ -45,3 +46,12 @@ def viewAll(request):
         viewList = BlogModel.objects.all()
         serialize_data = PostSerializer(viewList,many=True)
         return HttpResponse({json.dumps(serialize_data.data)})
+    
+@csrf_exempt
+def viewPost(request):
+    if request.method == "POST":
+        recieved_data = json.loads(request.body)
+        getuserid = recieved_data["userid"]
+        data = list(BlogModel.objects.filter(Q(userid__icontains = getuserid)).values())
+        return HttpResponse(json.dumps(data))
+
